@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix
+    /* CSS */
+    .sass("resources/sass/main.scss", "public/css/dashmix.css")
+    .sass("resources/sass/dashmix/theme/xwork.scss", "public/css/themes/")
+
+    /* JS */
+    .js("resources/js/dashmix/app.js", "public/js/dashmix.app.js")
+
+    /* Tools */
+    .browserSync("localhost:8000")
+    .disableNotifications()
+
+    /* Options */
+    .options({
+        processCssUrls: false
+    });

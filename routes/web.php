@@ -13,10 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'website.home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+/*
+|--------------------------------------------------------------------------
+| Web Routes Dashboard
+|--------------------------------------------------------------------------
+*/
+Route::prefix('dashboard')->group(function () {
+    
+    // Dashboard
+     Route::get('/home', 'Dashboard\DashboardController@index')->name('home'); 
+
+    // Users
+    Route::resource('users', 'Auth\UsersController');
+
+});

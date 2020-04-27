@@ -1,0 +1,30 @@
+/*
+ *  Document   : tools.js
+ *  Author     : pixelcave
+ *  Description: Various small tools
+ *
+ */
+
+// Import global dependencies
+import "./../bootstrap";
+
+// Tools
+export default class Tools {
+    /*
+     * Updates the color theme
+     *
+     */
+    static updateTheme(themeEl, themeName) {}
+
+    /*
+     * Returns current browser's window width
+     *
+     */
+    static getWidth() {
+        return (
+            window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth
+        );
+    }
+}

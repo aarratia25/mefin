@@ -1,77 +1,100 @@
-@extends('layouts.app')
+@extends('layouts.simple')
+
+@section('title', 'Register')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<!-- Page Content -->
+<div class="bg-image" style="background-image: url('/images/photo14@2x.jpg');">
+    <div class="row no-gutters justify-content-center bg-black-75">
+        <div class="hero-static col-sm-8 col-md-6 col-xl-4 d-flex align-items-center p-2 px-sm-0">
+            <!-- Sign Up Block -->
+            <div class="block block-transparent block-rounded w-100 mb-0 overflow-hidden">
+                <div class="block-content block-content-full px-lg-5 px-xl-6 py-4 py-md-5 py-lg-6 bg-white">
+                    <!-- Header -->
+                    <div class="mb-2 text-center">
+                        <a class="link-fx text-success font-w700 font-size-h1" href="{{ route('login') }}">
+                            <span class="text-dark">Dash</span><span class="text-success">mix</span>
+                        </a>
+                        <a href="{{ route('login') }}">
+                            <p class="text-uppercase font-w700 font-size-sm text-muted">Login</p>
+                        </a>
+                    </div>
+                    <!-- END Header -->
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <!-- Sign Up Form -->
+                    <form class="js-validation-signup" action="{{ route('register') }}" method="POST">
                         @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ old('name') }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-user-circle"></i>
                                     </span>
-                                @enderror
+                                </div>
                             </div>
+                            @error('name')
+                                <div class="db invalid-feedback animated fadeIn">{{ $message }}</div>
+                            @enderror
                         </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="E-Mail Addres" value="{{ old('email') }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-envelope-open"></i>
                                     </span>
-                                @enderror
+                                </div>
                             </div>
+                            @error('email')
+                                <div class="db invalid-feedback animated fadeIn">{{ $message }}</div>
+                            @enderror
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-asterisk"></i>
                                     </span>
-                                @enderror
+                                </div>
+                            </div>
+                            @error('password')
+                                <div class="db invalid-feedback animated fadeIn">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Password Confirm">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-asterisk"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <a class="font-w600 font-size-sm" href="#" data-toggle="modal" data-target="#modal-terms">Terms &amp; Conditions</a>
+                            <div class="custom-control custom-checkbox custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="signup-terms" name="signup-terms">
+                                <label class="custom-control-label" for="signup-terms">I agree</label>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                        @component('components.auth.terms') @endcomponent
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-hero-success">
+                                <i class="fa fa-fw fa-plus mr-1"></i> Sign Up
+                            </button>
                         </div>
                     </form>
+                    <!-- END Sign Up Form -->
                 </div>
             </div>
         </div>
+        <!-- END Sign Up Block -->
     </div>
 </div>
+<!-- END Page Content -->
 @endsection

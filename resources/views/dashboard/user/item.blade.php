@@ -43,7 +43,7 @@
                 </a>
             @endif
 
-            <a href="#" data-id="{{ $user->id }}" class="js-swal-confirm cfff btn btn-sm btn-primary" data-toggle="tooltip" title="Delete">
+            <a href="#" data-confirm="Yes, delete it!" data-cancel="Cancel" data-title="Are you sure?" data-text="You will not be able to recover this imaginary file!" data-id="{{ $user->id }}" class="js-swal-confirm cfff btn btn-sm btn-primary" data-toggle="tooltip" title="Delete">
                 <i class="fa fa-times"></i>
             </a>
         </div>

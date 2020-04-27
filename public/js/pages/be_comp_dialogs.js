@@ -24,13 +24,18 @@ class pageDialogs {
 
         jQuery('.js-swal-confirm').click(function () {
             let id = jQuery(this).attr("data-id");
+            let title = jQuery(this).attr("data-title");
+            let text = jQuery(this).attr("data-text");
+            let confirmButtonText = jQuery(this).attr("data-confirm");
+            let cancelButtonText = jQuery(this).attr("data-cancel");
 
             toast.fire({
-                title: 'Are you sure?',
-                text: 'You will not be able to recover this imaginary file!',
+                title: title,
+                text: text,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: cancelButtonText,
                 html: false,
             }).then(result => {
 

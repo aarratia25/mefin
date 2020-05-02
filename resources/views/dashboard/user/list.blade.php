@@ -44,21 +44,17 @@
                 <table class="table table-bordered table-striped table-vcenter">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width: 100px;">
+                            <th class="text-center">
                                 <i class="far fa-user"></i>
                             </th>
                             <th>Name</th>
-                            <th style="width: 30%;">Email</th>
-                            <th style="width: 15%;">Access</th>
-                            <th class="text-center" style="width: 100px;">Actions</th>
+                            <th>Email</th>
+                            <th>Access</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($edit ?? '')
-                            @include('dashboard.user.item', ['user' => $user, 'edit' => true])
-                        @else 
-                            @each('dashboard.user.item', $users, 'user', 'dashboard.user.no-items')
-                        @endif
+                        @each('dashboard.user.item', $users, 'user', 'dashboard.user.no-items')
                     </tbody>
                 </table>
             </div>
@@ -67,5 +63,4 @@
     <!-- END Full Table -->
 </div>
 <!-- END Page Content -->
-
 @endsection

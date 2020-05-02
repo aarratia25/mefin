@@ -178,8 +178,8 @@ export default class Helpers {
                 let fileName =
                     e.target.files.length > 1
                         ? e.target.files.length +
-                          " " +
-                          (el.data("lang-files") || "Files")
+                        " " +
+                        (el.data("lang-files") || "Files")
                         : e.target.files[0].name;
 
                 el.next(".custom-file-label")
@@ -243,7 +243,7 @@ export default class Helpers {
                 let elSpeed = el.data("speed") || 1000;
                 let headerHeight =
                     lHeader.length &&
-                    jQuery("#page-container").hasClass("page-header-fixed")
+                        jQuery("#page-container").hasClass("page-header-fixed")
                         ? lHeader.outerHeight()
                         : 0;
 
@@ -311,8 +311,8 @@ export default class Helpers {
                     windowW < 992
                         ? 0
                         : el.data("timeout")
-                        ? el.data("timeout")
-                        : 0;
+                            ? el.data("timeout")
+                            : 0;
 
                 // Add .js-appear-enabled class to tag it as activated and init it
                 el.addClass("js-appear-enabled").appear(
@@ -1200,7 +1200,7 @@ export default class Helpers {
                             // On window resize, re-run the Sparkline helper
                             jQuery(window).on(
                                 "resize.pixelcave.helpers.sparkline",
-                                function(e) {
+                                function (e) {
                                     clearTimeout(sparklineTimeout);
 
                                     sparklineTimeout = setTimeout(() => {
@@ -1355,5 +1355,29 @@ export default class Helpers {
         jQuery("#css-main").after(
             '<link rel="stylesheet" id="css-theme" href="' + asset + '">'
         );
+    }
+
+    static updateData(idsubmit) {
+
+        var form = jQuery(idsubmit);
+        var route = form.attr('action');
+
+        jQuery(idsubmit).submit(function () {
+
+            jQuery.ajax({
+                url: route,
+                method: "PUT",
+                data: form.serialize(),
+                headers: {
+                    "X-CSRF-TOKEN": window.csrfToken
+                },
+                success: function (response) {
+                },
+                error: function () { }
+            });
+
+            return false;
+        })
+
     }
 }

@@ -26150,6 +26150,8 @@ var App = /*#__PURE__*/function (_Template) {
 
     _this.configDarkTheme();
 
+    _this.viewData();
+
     return _this;
   }
   /*
@@ -26206,6 +26208,26 @@ var App = /*#__PURE__*/function (_Template) {
           jQuery(trID + elementId).remove();
         },
         error: function error() {}
+      });
+    }
+  }, {
+    key: "viewData",
+    value: function viewData() {
+      jQuery('.js-modal-edit').click(function () {
+        var id = jQuery(this).attr("data-id");
+        var endpoint = jQuery(this).attr("data-endpoint");
+        var modal = jQuery(this).attr("data-modal");
+        var idsubmit = jQuery(this).attr("data-submit");
+        _modules_helpers__WEBPACK_IMPORTED_MODULE_2__["default"].updateData(idsubmit);
+        jQuery.ajax({
+          url: "/dashboard/" + endpoint + "/" + id,
+          method: "GET",
+          success: function success(response) {
+            jQuery('#title-modal').text(id);
+            jQuery(modal).modal('toggle');
+          },
+          error: function error() {}
+        });
       });
     }
   }]);
@@ -27505,6 +27527,25 @@ var Helpers = /*#__PURE__*/function () {
     key: "linkTheme",
     value: function linkTheme(asset) {
       jQuery("#css-main").after('<link rel="stylesheet" id="css-theme" href="' + asset + '">');
+    }
+  }, {
+    key: "updateData",
+    value: function updateData(idsubmit) {
+      var form = jQuery(idsubmit);
+      var route = form.attr('action');
+      jQuery(idsubmit).submit(function () {
+        jQuery.ajax({
+          url: route,
+          method: "PUT",
+          data: form.serialize(),
+          headers: {
+            "X-CSRF-TOKEN": window.csrfToken
+          },
+          success: function success(response) {},
+          error: function error() {}
+        });
+        return false;
+      });
     }
   }]);
 

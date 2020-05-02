@@ -22,6 +22,7 @@ export default class App extends Template {
     constructor() {
         super();
         this.configDarkTheme();
+        this.viewData();
     }
 
     /*
@@ -69,6 +70,28 @@ export default class App extends Template {
                 jQuery(trID + elementId).remove();
             },
             error: function () { }
+        });
+    }
+
+    viewData() {
+        jQuery('.js-modal-edit').click(function () {
+            let id = jQuery(this).attr("data-id");
+            let endpoint = jQuery(this).attr("data-endpoint");
+            let modal = jQuery(this).attr("data-modal");
+            let idsubmit = jQuery(this).attr("data-submit");
+
+            Helpers.updateData(idsubmit);
+
+            jQuery.ajax({
+                url: "/dashboard/" + endpoint + "/" + id,
+                method: "GET",
+                success: function (response) {
+                    jQuery('#title-modal').text(id);
+                    jQuery(modal).modal('toggle')
+                },
+                error: function () { }
+            });
+
         });
     }
 }

@@ -1366,10 +1366,10 @@ export default class Helpers {
 
             jQuery.ajax({
                 url: route,
-                method: "PUT",
+                method: 'PUT',
                 data: form.serialize(),
                 headers: {
-                    "X-CSRF-TOKEN": window.csrfToken
+                    'X-CSRF-TOKEN': window.csrfToken
                 },
                 success: function (response) {
                 },
@@ -1379,5 +1379,11 @@ export default class Helpers {
             return false;
         })
 
+    }
+
+    static showViewData(arr, json){
+        arr.forEach(function(v, i){
+            jQuery('input[name='+ v +']').val(json[v]);
+        });
     }
 }

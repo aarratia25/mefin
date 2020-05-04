@@ -11,12 +11,6 @@ import "./../bootstrap";
 // Tools
 export default class Tools {
     /*
-     * Updates the color theme
-     *
-     */
-    static updateTheme(themeEl, themeName) {}
-
-    /*
      * Returns current browser's window width
      *
      */

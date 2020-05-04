@@ -5,7 +5,7 @@
  */
 
 // SweetAlert2, for more examples you can check out https://github.com/sweetalert2/sweetalert2
-class pageDialogs {
+class sweetAlert {
     /*
      * SweetAlert2 demo functionality
      *
@@ -59,4 +59,4 @@ class pageDialogs {
 }
 
 // Initialize when page loads
-jQuery(() => { pageDialogs.init(); });
+jQuery(() => { sweetAlert.init(); });

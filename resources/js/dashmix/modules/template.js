@@ -50,7 +50,6 @@ export default class Template {
         this._uiHandleSidebars("init");
         this._uiHandleHeader();
         this._uiHandleNav();
-        this._uiHandleTheme();
 
         // API Init
         this._uiApiLayout();
@@ -260,67 +259,6 @@ export default class Template {
                 this._lpageLoader.removeClass("show");
             }
         }
-    }
-
-    /*
-     * Set active color theme functionality
-     *
-     */
-    _uiHandleTheme() {
-        let themeEl = jQuery("#css-theme");
-        let cookies = this._lPage.hasClass("enable-cookies") ? true : false;
-
-        // If cookies are enabled
-        if (cookies) {
-            let themeName = Cookies.get("dashmixThemeName") || false;
-
-            // Update color theme
-            if (themeName) {
-                Tools.updateTheme(themeEl, themeName);
-            }
-
-            // Update theme element
-            themeEl = jQuery("#css-theme");
-        }
-
-        // Set the active color theme link as active
-        jQuery(
-            '[data-toggle="theme"][data-theme="' +
-                (themeEl.length ? themeEl.attr("href") : "default") +
-                '"]'
-        ).addClass("active");
-
-        // Unbind event in case it is already enabled
-        this._lPage.off("click.pixelcave.themes");
-
-        // When a color theme link is clicked
-        this._lPage.on("click.pixelcave.themes", '[data-toggle="theme"]', e => {
-            e.preventDefault();
-
-            // Get element and data
-            let el = jQuery(e.currentTarget);
-            let themeName = el.data("theme");
-
-            // Set this color theme link as active
-            jQuery('[data-toggle="theme"]').removeClass("active");
-            jQuery(
-                '[data-toggle="theme"][data-theme="' + themeName + '"]'
-            ).addClass("active");
-
-            // Update color theme
-            Tools.updateTheme(themeEl, themeName);
-
-            // Update theme element
-            themeEl = jQuery("#css-theme");
-
-            // If cookies are enabled, save the new active color theme
-            if (cookies) {
-                Cookies.set("dashmixThemeName", themeName, { expires: 7 });
-            }
-
-            // Blur the link/button
-            el.blur();
-        });
     }
 
     /*

@@ -1,5 +1,5 @@
 <!-- Pop Out Block Modal -->
-<div class="modal fade" id="user-id-popout" tabindex="-1" role="dialog" aria-labelledby="user-id-popout" aria-hidden="true">
+<div class="modal fade" id="modal-popout" tabindex="-1" role="dialog" aria-labelledby="modal-popout" aria-hidden="true">
    <div class="modal-dialog modal-dialog-popout" role="document">
       <div class="modal-content">
          <div class="block block-themed block-transparent mb-0">

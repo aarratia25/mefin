@@ -11,7 +11,7 @@
         <meta name="robots" content="noindex, nofollow">
 
         <!-- Icon -->
-        <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
+        <link rel="shortcut icon" href="{{ asset('images/dashboard/favicon.ico') }}">
 
         <!-- Fonts and Styles -->
         @yield('css_before')

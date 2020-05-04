@@ -26219,10 +26219,16 @@ var App = /*#__PURE__*/function (_Template) {
         var modal = jQuery(this).attr("data-modal");
         var idsubmit = jQuery(this).attr("data-submit");
         _modules_helpers__WEBPACK_IMPORTED_MODULE_2__["default"].updateData(idsubmit);
+        var form = jQuery(idsubmit).find('input, select, textarea, checkbox, radio');
+        var inputs = [];
+        form.each(function (i, v) {
+          inputs.push(jQuery(v).attr('name'));
+        });
         jQuery.ajax({
           url: "/dashboard/" + endpoint + "/" + id,
           method: "GET",
-          success: function success(response) {
+          success: function success(data) {
+            _modules_helpers__WEBPACK_IMPORTED_MODULE_2__["default"].showViewData(inputs, data);
             jQuery('#title-modal').text(id);
             jQuery(modal).modal('toggle');
           },
@@ -27536,15 +27542,22 @@ var Helpers = /*#__PURE__*/function () {
       jQuery(idsubmit).submit(function () {
         jQuery.ajax({
           url: route,
-          method: "PUT",
+          method: 'PUT',
           data: form.serialize(),
           headers: {
-            "X-CSRF-TOKEN": window.csrfToken
+            'X-CSRF-TOKEN': window.csrfToken
           },
           success: function success(response) {},
           error: function error() {}
         });
         return false;
+      });
+    }
+  }, {
+    key: "showViewData",
+    value: function showViewData(arr, json) {
+      arr.forEach(function (v, i) {
+        jQuery('input[name=' + v + ']').val(json[v]);
       });
     }
   }]);
@@ -27628,9 +27641,7 @@ var Template = /*#__PURE__*/function () {
 
       this._uiHandleHeader();
 
-      this._uiHandleNav();
-
-      this._uiHandleTheme(); // API Init
+      this._uiHandleNav(); // API Init
 
 
       this._uiApiLayout();
@@ -27788,57 +27799,6 @@ var Template = /*#__PURE__*/function () {
           this._lpageLoader.removeClass("show");
         }
       }
-    }
-    /*
-     * Set active color theme functionality
-     *
-     */
-
-  }, {
-    key: "_uiHandleTheme",
-    value: function _uiHandleTheme() {
-      var themeEl = jQuery("#css-theme");
-      var cookies = this._lPage.hasClass("enable-cookies") ? true : false; // If cookies are enabled
-
-      if (cookies) {
-        var themeName = Cookies.get("dashmixThemeName") || false; // Update color theme
-
-        if (themeName) {
-          _tools__WEBPACK_IMPORTED_MODULE_1__["default"].updateTheme(themeEl, themeName);
-        } // Update theme element
-
-
-        themeEl = jQuery("#css-theme");
-      } // Set the active color theme link as active
-
-
-      jQuery('[data-toggle="theme"][data-theme="' + (themeEl.length ? themeEl.attr("href") : "default") + '"]').addClass("active"); // Unbind event in case it is already enabled
-
-      this._lPage.off("click.pixelcave.themes"); // When a color theme link is clicked
-
-
-      this._lPage.on("click.pixelcave.themes", '[data-toggle="theme"]', function (e) {
-        e.preventDefault(); // Get element and data
-
-        var el = jQuery(e.currentTarget);
-        var themeName = el.data("theme"); // Set this color theme link as active
-
-        jQuery('[data-toggle="theme"]').removeClass("active");
-        jQuery('[data-toggle="theme"][data-theme="' + themeName + '"]').addClass("active"); // Update color theme
-
-        _tools__WEBPACK_IMPORTED_MODULE_1__["default"].updateTheme(themeEl, themeName); // Update theme element
-
-        themeEl = jQuery("#css-theme"); // If cookies are enabled, save the new active color theme
-
-        if (cookies) {
-          Cookies.set("dashmixThemeName", themeName, {
-            expires: 7
-          });
-        } // Blur the link/button
-
-
-        el.blur();
-      });
     }
     /*
      * Layout API
@@ -28332,20 +28292,12 @@ var Tools = /*#__PURE__*/function () {
   }
 
   _createClass(Tools, null, [{
-    key: "updateTheme",
+    key: "getWidth",
 
-    /*
-     * Updates the color theme
-     *
-     */
-    value: function updateTheme(themeEl, themeName) {}
     /*
      * Returns current browser's window width
      *
      */
-
-  }, {
-    key: "getWidth",
     value: function getWidth() {
       return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     }
@@ -28387,9 +28339,9 @@ var Tools = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Mipto\Desktop\Projects\Alfredo\mefin\resources\js\dashmix\app.js */"./resources/js/dashmix/app.js");
-__webpack_require__(/*! C:\Users\Mipto\Desktop\Projects\Alfredo\mefin\resources\sass\main.scss */"./resources/sass/main.scss");
-module.exports = __webpack_require__(/*! C:\Users\Mipto\Desktop\Projects\Alfredo\mefin\resources\sass\dashmix\theme\xwork.scss */"./resources/sass/dashmix/theme/xwork.scss");
+__webpack_require__(/*! C:\Users\batuto\Desktop\mefin\resources\js\dashmix\app.js */"./resources/js/dashmix/app.js");
+__webpack_require__(/*! C:\Users\batuto\Desktop\mefin\resources\sass\main.scss */"./resources/sass/main.scss");
+module.exports = __webpack_require__(/*! C:\Users\batuto\Desktop\mefin\resources\sass\dashmix\theme\xwork.scss */"./resources/sass/dashmix/theme/xwork.scss");
 
 
 /***/ })

@@ -82,11 +82,21 @@ export default class App extends Template {
 
             Helpers.updateData(idsubmit);
 
+            let form = jQuery(idsubmit).find('input, select, textarea, checkbox, radio');
+            let inputs = [];
+
+            form.each(function(i, v){
+                inputs.push(jQuery(v).attr('name'));
+            });
+
             jQuery.ajax({
                 url: "/dashboard/" + endpoint + "/" + id,
                 method: "GET",
-                success: function (response) {
+                success: function (data) {
+                    Helpers.showViewData(inputs, data);
+
                     jQuery('#title-modal').text(id);
+                    
                     jQuery(modal).modal('toggle')
                 },
                 error: function () { }

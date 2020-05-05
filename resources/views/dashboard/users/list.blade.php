@@ -4,21 +4,11 @@
 
 @section('content')
 
-<!-- Hero -->
-<div class="bg-body-light">
-    <div class="content content-full">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Users List</h1>
-            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Table user</li>
-                    <li class="breadcrumb-item active" aria-current="page">Users</li>
-                </ol>
-            </nav>
-        </div>
-   </div>
-</div>
-<!-- END Hero -->
+@component('components.dashboard.hero', ['items' => ['Table', 'Users'] ])
+    @slot('page')
+        Users
+    @endslot
+@endcomponent
 
 <!-- Page Content -->
 <div class="content">
@@ -47,14 +37,16 @@
                             <th class="text-center">
                                 <i class="far fa-user"></i>
                             </th>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Access</th>
+                            <th>Role</th>
+                            <th>Created at</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @each('dashboard.user.item', $users, 'user', 'dashboard.user.no-items')
+                        @each('dashboard.users.item', $users, 'user', 'dashboard.users.no-items')
                     </tbody>
                 </table>
             </div>

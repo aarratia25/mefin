@@ -22,12 +22,15 @@ Auth::routes();
 | Web Routes Dashboard
 |--------------------------------------------------------------------------
 */
-Route::prefix('dashboard')->group(function () {
+Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     
     // Dashboard
-     Route::get('/home', 'Dashboard\DashboardController@index')->name('home'); 
+     Route::get('home', 'Dashboard\DashboardController@index')->name('home'); 
 
     // Users
-    Route::resource('users', 'Auth\UsersController');
+    Route::resource('users', 'Dashboard\UsersController');
+    
+    // Roles
+    Route::resource('roles', 'Dashboard\RoleController');
 
 });

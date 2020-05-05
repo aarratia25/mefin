@@ -12,6 +12,8 @@ import "./bootstrap";
 import Tools from "./modules/tools";
 import Helpers from "./modules/helpers";
 import Template from "./modules/template";
+import 'sweetalert2/src/sweetalert2.scss'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 // App extends Template
 export default class App extends Template {
@@ -23,6 +25,7 @@ export default class App extends Template {
         super();
         this.configDarkTheme();
         this.viewData();
+        this.sweetAlertDelete();
     }
 
     /*
@@ -58,18 +61,51 @@ export default class App extends Template {
             }
         });
     }
+    sweetAlertDelete() {
+        // Set default properties
+        let toast = Swal.mixin({
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn btn-success m-1',
+                cancelButton: 'btn btn-danger m-1',
+            }
+        });
 
-    deleteData(elementId, trID, endpoint) {
-        jQuery.ajax({
-            url: "/dashboard/" + endpoint + "/" + elementId,
-            method: "DELETE",
-            headers: {
-                "X-CSRF-TOKEN": window.csrfToken
-            },
-            success: function (response) {
-                jQuery(trID + elementId).remove();
-            },
-            error: function () { }
+        // Init an example confirm dialog on button click
+        jQuery('.js-swal-confirm').click(function () {
+            let id = jQuery(this).attr("data-id");
+            let title = jQuery(this).attr("data-title");
+            let text = jQuery(this).attr("data-text");
+            let confirmButtonText = jQuery(this).attr("data-confirm");
+            let cancelButtonText = jQuery(this).attr("data-cancel");
+            let endpoint = jQuery(this).attr("data-endpoint");
+            let row = jQuery(this).attr("data-row");
+
+            toast.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: cancelButtonText,
+                html: false,
+            }).then(result => {
+
+                if (result.value) {
+                    jQuery.ajax({
+                        url: "/dashboard/" + endpoint + "/" + id,
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": window.csrfToken
+                        },
+                        success: function (response) {
+                            jQuery(row + id).remove();
+                        },
+                        error: function () { }
+                    });
+                }
+            });
+            return false;
         });
     }
 
@@ -78,11 +114,11 @@ export default class App extends Template {
             let id = jQuery(this).attr("data-id");
             let endpoint = jQuery(this).attr("data-endpoint");
             let modal = jQuery(this).attr("data-modal");
-            let idsubmit = jQuery(this).attr("data-submit");
+            let idSubmit = jQuery(this).attr("data-submit");
 
-            Helpers.updateData(idsubmit);
+            Helpers.updateData(idSubmit, endpoint, id, modal);
 
-            let form = jQuery(idsubmit).find('input, select, textarea, checkbox, radio');
+            let form = jQuery(idSubmit).find('input, select, textarea, checkbox, radio');
             let inputs = [];
 
             form.each(function(i, v){
@@ -97,7 +133,7 @@ export default class App extends Template {
 
                     jQuery('#title-modal').text(id);
                     
-                    jQuery(modal).modal('toggle')
+                    jQuery(modal).modal('toggle');
                 },
                 error: function () { }
             });

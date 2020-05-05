@@ -1,20 +1,15 @@
-@section('css_before')
-    <!-- Page JS Plugins CSS -->
-    <link rel="stylesheet" href="{{ mix('css/plugins.css') }}">
-@endsection
-
-<tr {{ 'id = i-user-' . $user->id }}>
+<tr {{ 'id = r-role' . $role->id }}>
     <td class="text-center">
         <img class="img-avatar img-avatar48" src="/images/avatar4.jpg">
     </td>
+    <td>
+        {{ $role->id - 1 }}
+    </td>
     <td class="font-w600">
-        {{ $user->name }}
+        {{ $role->name }}
     </td>
     <td>
-        {{ $user->email }}
-    </td>
-    <td>
-        <span class="badge badge-info">Business</span>
+        {{ $role->created_at->diffForHumans() }}
     </td>
     <td class="text-center">
         <div class="btn-group">
@@ -23,10 +18,10 @@
                 class="cfff btn btn-sm btn-primary js-modal-edit" 
                 data-toggle="tooltip" 
                 title="Edit" 
-                data-id="{{ $user->id}}" 
-                data-endpoint="users"
-                data-modal="#modal-popout" 
-                data-submit="#form-user">
+                data-id="{{ $role->id}}" 
+                data-endpoint="roles"
+                data-modal="#modal-role" 
+                data-submit="#form-role">
                 <i class="fa fa-pencil-alt"></i>
             </a>
 
@@ -36,7 +31,9 @@
                 data-cancel="Cancel" 
                 data-title="Are you sure?" 
                 data-text="You will not be able to recover this imaginary file!" 
-                data-id="{{ $user->id }}" 
+                data-id="{{ $role->id }}" 
+                data-endpoint="roles"
+                data-row="r-role"
                 data-toggle="tooltip" 
                 title="Delete">
                 <i class="fa fa-times"></i>
@@ -47,20 +44,20 @@
 
 @section('modal')
     @component('components.dashboard.modal')
-        
+
+        @slot('id')
+            modal-role
+        @endslot
+
         @slot('title')
             User edit
         @endslot
         
         @slot('content')
-            <form action="{{ route('users.update', $user->id) }}" method="POST" id="form-user"> 
+            <form action="#" method="POST" id="form-role"> 
                 <div class="form-group">
                     <label for="example-text-input">Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Text Input">
-                </div>
-                <div class="form-group">
-                    <label for="example-text-input">Email</label>
-                    <input type="email" class="form-control" name="email" placeholder="Text Input">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -69,9 +66,4 @@
         @endslot
         
     @endcomponent
-@endsection
-
-@section('js_after')
-   <!-- Page JS Plugins -->
-    <script src="{{ mix('js/plugins.js') }}"></script>
 @endsection

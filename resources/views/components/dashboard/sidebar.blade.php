@@ -43,12 +43,25 @@
             <li class="nav-main-heading">Pages</li>
             <li class="nav-main-item{{ request()->is('dashboard/users') ? ' open' : '' }}">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
-                    <i class="nav-main-link-icon si si-bulb"></i>
+                    <i class="nav-main-link-icon si si-users"></i>
                     <span class="nav-main-link-name">Users</span>
                 </a>
                 <ul class="nav-main-submenu">
                     <li class="nav-main-item">
                         <a class="nav-main-link{{ request()->is('...') ? ' active' : '' }}" href="{{ route('users.index') }}">
+                            <span class="nav-main-link-name">List - Edit - Delete</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-main-item{{ request()->is('dashboard/roles') ? ' open' : '' }}">
+                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
+                    <i class="nav-main-link-icon si si-lock"></i>
+                    <span class="nav-main-link-name">Roles</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{ request()->is('...') ? ' active' : '' }}" href="{{ route('roles.index') }}">
                             <span class="nav-main-link-name">List - Edit - Delete</span>
                         </a>
                     </li>

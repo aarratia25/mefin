@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Dashboard;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -13,10 +14,18 @@ class UsersController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware('auth');
+        Carbon::setlocale(config('app.locale'));
+        
+        $this->middleware('protected-user-admin');
+        $this->middleware('can:user.index')->only('index');
+        $this->middleware('can:user.create')->only(['create', 'store']);
+        $this->middleware('can:user.edit')->only(['edit', 'update']);
+        $this->middleware('can:user.show')->only('show');
+        $this->middleware('can:user.destroy')->only('destroy');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +33,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('name', '!=', 'admin')->get();
         
-        return view('dashboard.user.list', compact('users'));
+        return view('dashboard.users.list', compact('users'));
     }
 
     /**
@@ -46,8 +55,8 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
+    public function show(User $user, Request $request)
+    {   
         return $user;
     }
 
@@ -62,7 +71,7 @@ class UsersController extends Controller
     {
         try {
             if ( $user->update($request->all()) ) {
-                return redirect()->route('users.index')->with(['message' => 'user update!']);
+                $request->session()->flash('message', 'user update!'); 
             }
         } catch (\Throwable $th) {
             throw $th;

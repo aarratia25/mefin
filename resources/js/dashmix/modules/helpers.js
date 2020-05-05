@@ -1357,28 +1357,26 @@ export default class Helpers {
         );
     }
 
-    static updateData(idsubmit) {
+    static updateData(idSubmit, endpoint, id) 
+    {
+        let form = jQuery(idSubmit);
 
-        var form = jQuery(idsubmit);
-        var route = form.attr('action');
-
-        jQuery(idsubmit).submit(function () {
-
+        jQuery(idSubmit).unbind('submit').submit(function(){
             jQuery.ajax({
-                url: route,
+                url: "/dashboard/" + endpoint + "/" + id,
                 method: 'PUT',
                 data: form.serialize(),
                 headers: {
                     'X-CSRF-TOKEN': window.csrfToken
                 },
                 success: function (response) {
+                    location.reload();
                 },
                 error: function () { }
             });
-
+            
             return false;
-        })
-
+        });
     }
 
     static showViewData(arr, json){

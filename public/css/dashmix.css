@@ -26682,3 +26682,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .cfff {
   color: #ffffff !important;
 }
+
+.t-c {
+  text-transform: capitalize;
+}

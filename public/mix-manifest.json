@@ -1,7 +1,5 @@
 {
     "/js/dashmix.app.js": "/js/dashmix.app.js",
     "/css/dashmix.css": "/css/dashmix.css",
-    "/css/theme/xwork.css": "/css/theme/xwork.css",
-    "/css/plugins.css": "/css/plugins.css",
-    "/js/plugins.js": "/js/plugins.js"
+    "/css/theme/xwork.css": "/css/theme/xwork.css"
 }

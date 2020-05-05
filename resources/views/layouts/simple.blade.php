@@ -10,13 +10,15 @@
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
 
+        <!-- Stylesheets -->
+        <!-- Fonts and Dashmix framework -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700">
+        
         <!-- Icon -->
         <link rel="shortcut icon" href="{{ asset('images/dashboard/favicon.ico') }}">
 
         <!-- Fonts and Styles -->
         @yield('css_before')
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700">
         
         <link rel="stylesheet" id="css-main" href="{{ mix('css/dashmix.css') }}">
         

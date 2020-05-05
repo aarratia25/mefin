@@ -9,7 +9,7 @@
     @endslot
 
     @slot('description')
-        This is a warning message
+        No users found
     @endslot
 
 @endcomponent

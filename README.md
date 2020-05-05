@@ -8,5 +8,5 @@
     5) > php artisan serve
 
 **Login**
-> 	username: **username@app.dev** 	
+> 	username: **admin@app.dev** 	
 >   password: **password**

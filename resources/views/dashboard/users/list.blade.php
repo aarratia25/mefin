@@ -4,11 +4,9 @@
 
 @section('content')
 
-@component('components.dashboard.hero', ['items' => ['Table', 'Users'] ])
-    @slot('page')
-        Users
-    @endslot
-@endcomponent
+<!-- Hero -->
+    <x-hero page="Users" :items="['Table', 'Roles']"/>
+<!-- END Hero -->
 
 <!-- Page Content -->
 <div class="content">
@@ -21,35 +19,21 @@
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati repellendus exercitationem sapiente eius, fuga ducimus excepturi ipsam! Nemo porro quidem a, sapiente voluptates veniam commodi totam iste quae eius dignissimos!
             </p>
-            @component('components.dashboard.alerts') 
-                @slot('class')
-                    alert-success
-                @endslot
+            
+            <x-alerts class="alert-success" :title="session('message')"/>
 
-                @slot('title')
-                    {{ session('message') }}
-                @endslot
-            @endcomponent
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-vcenter">
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-                                <i class="far fa-user"></i>
-                            </th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Created at</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @each('dashboard.users.item', $users, 'user', 'dashboard.users.no-items')
-                    </tbody>
-                </table>
-            </div>
+            <!-- Full Table -->
+            <x-table class="test" :headers="[
+                ['name' => 'ID'],
+                ['name' => 'Name'],
+                ['name' => 'Created at'],
+                ['class' => 'text-center', 'name' => 'Actions']
+            ]">
+            
+            @each('dashboard.users.item', $users, 'user', 'components.no-items')
+            
+            </x-table>
+            <!-- END Full Table -->
         </div>
     </div>
     <!-- END Full Table -->

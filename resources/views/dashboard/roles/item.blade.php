@@ -1,7 +1,4 @@
 <tr {{ 'id = r-role' . $role->id }}>
-    <td class="text-center">
-        <img class="img-avatar img-avatar48" src="/images/avatar4.jpg">
-    </td>
     <td>
         {{ $role->id - 1 }}
     </td>
@@ -41,29 +38,3 @@
         </div>
     </td>
 </tr>
-
-@section('modal')
-    @component('components.dashboard.modal')
-
-        @slot('id')
-            modal-role
-        @endslot
-
-        @slot('title')
-            User edit
-        @endslot
-        
-        @slot('content')
-            <form action="#" method="POST" id="form-role"> 
-                <div class="form-group">
-                    <label for="example-text-input">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Text Input">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        @endslot
-        
-    @endcomponent
-@endsection

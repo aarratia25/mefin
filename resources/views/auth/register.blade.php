@@ -74,14 +74,16 @@
                             </div>
                         </div>
                         <div class="form-group text-center">
-                            <a class="font-w600 font-size-sm" href="#" data-toggle="modal" data-target="#modal-terms">Terms &amp; Conditions</a>
+                            <a class="font-w600 font-size-sm" href="#" data-toggle="modal" data-target="#modal-terms">Terms & Conditions</a>
                             <div class="custom-control custom-checkbox custom-control-primary">
                                 <input type="checkbox" class="custom-control-input" id="signup-terms" name="signup-terms">
                                 <label class="custom-control-label" for="signup-terms">I agree</label>
                             </div>
                         </div>
 
-                        @component('components.auth.terms') @endcomponent
+                        <x-modal id="modal-terms" title="Terms & Conditions" class="modal-dialog-popout">
+                            Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
+                        </x-modal>
 
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-hero-success">

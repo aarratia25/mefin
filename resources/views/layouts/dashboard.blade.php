@@ -31,7 +31,7 @@
         <!-- Page Container -->
         <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed page-header-dark page-footer-fixed main-content-narrow">
             <!-- Sidebar -->
-            @component('components.dashboard.sidebar') @endcomponent
+                <x-sidebar></x-sidebar>
             <!-- END Sidebar -->
 
             <!-- Header -->

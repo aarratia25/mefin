@@ -50,32 +50,18 @@
     </td>
 </tr>
 
-@section('modal')
-    @component('components.dashboard.modal')
-        
-        @slot('id')
-            modal-user
-        @endslot
-
-        @slot('title')
-            User edit
-        @endslot
-        
-        @slot('content')
-            <form action="#" method="POST" id="form-user"> 
-                <div class="form-group">
-                    <label for="example-text-input">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Text Input">
-                </div>
-                <div class="form-group">
-                    <label for="example-text-input">Email</label>
-                    <input type="email" class="form-control" name="email" placeholder="Text Input">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        @endslot
-        
-    @endcomponent
-@endsection
+<x-modal id="modal-user" title="User Edit" class="modal-dialog-popout">
+    <form action="#" method="POST" id="form-user"> 
+        <div class="form-group">
+            <label for="example-text-input">Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Text Input">
+        </div>
+        <div class="form-group">
+            <label for="example-text-input">Email</label>
+            <input type="email" class="form-control" name="email" placeholder="Text Input">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</x-modal>

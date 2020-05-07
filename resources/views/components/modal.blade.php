@@ -1,6 +1,6 @@
 <!-- Pop Out Block Modal -->
 <div class="modal fade" id="{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="{{ $id }}" aria-hidden="true">
-   <div class="modal-dialog {{  classModal($config ?? null) }}" role="document">
+   <div {{ $attributes->merge(['class' => 'modal-dialog']) }} role="document">
       <div class="modal-content">
          <div class="block block-themed block-transparent mb-0">
             <div class="block-header bg-primary-dark">
@@ -14,7 +14,7 @@
                   </div>
             </div>
             <div class="block-content">
-               {{ $content }}
+               {{ $slot }}
             </div>
          </div>
       </div>

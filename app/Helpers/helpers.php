@@ -18,21 +18,3 @@ if (!function_exists('getRoles')) {
         return 'disabled';
     }
 }
-
-if (!function_exists('classModal')) {
-    /**
-     * classModal
-     * 
-     * @return class config
-     */
-    function classModal($configs)
-    {
-        if( !is_null($configs) ){
-
-            return implode(' ', $configs);
-
-        }
-       
-        return 'modal-dialog-popout'; 
-    }
-}

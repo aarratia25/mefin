@@ -13,7 +13,7 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">Full Table</h3>
-            <button type="button" class="btn-block-option" data-toggle="modal" data-target="#create-role">
+            <button type="button" class="btn-block-option add-new-data" data-toggle="modal" data-target="#create-role" data-submit="#form-create-role" data-endpoint="roles">
                 <i class="si si-settings"></i>
             </button>
         </div>
@@ -42,6 +42,8 @@
 <!-- END Page Content -->
 @endsection
 @section('modal')
+    
+    {{-- Edit Role --}}
     <x-modal id="modal-role" title="Role Edit" class="modal-dialog-popout">
         <form action="#" method="POST" id="form-role"> 
             <div class="form-group">
@@ -53,11 +55,14 @@
             </div>
         </form>
     </x-modal>
-    <x-modal id="create-role" title="Role Edit" class="modal-dialog-popout">
-        <form action="#" method="POST" id="form-role"> 
+
+    {{-- Create Role --}}
+    <x-modal id="create-role" title="Create Role" class="modal-dialog-popout">
+        <form action="#" method="POST" id="form-create-role"> 
             <div class="form-group">
                 <label for="example-text-input">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="Text Input">
+                <input type="text" class="form-control" name="name" placeholder="Text Input" id="error-fg-name">
+                <div id="error-message-name"></div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>

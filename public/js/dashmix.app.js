@@ -29916,6 +29916,8 @@ var App = /*#__PURE__*/function (_Template) {
 
     _this.sweetAlertDelete();
 
+    _this.createData();
+
     return _this;
   }
   /*
@@ -30028,6 +30030,39 @@ var App = /*#__PURE__*/function (_Template) {
             jQuery(modal).modal('toggle');
           },
           error: function error() {}
+        });
+        return false;
+      });
+    }
+  }, {
+    key: "createData",
+    value: function createData() {
+      jQuery('.add-new-data').click(function () {
+        var idSubmit = jQuery(this).attr("data-submit");
+        var endpoint = jQuery(this).attr("data-endpoint");
+        var form = jQuery(idSubmit);
+        jQuery(idSubmit).unbind('submit').submit(function () {
+          jQuery.ajax({
+            url: "/dashboard/" + endpoint,
+            method: 'POST',
+            data: form.serialize(),
+            headers: {
+              'X-CSRF-TOKEN': window.csrfToken
+            },
+            success: function success(response) {
+              location.reload();
+            },
+            error: function error(err) {
+              if (err.status == 422) {
+                var resError = err.responseJSON.errors;
+                jQuery.each(resError, function (i, error) {
+                  jQuery('#error-fg-' + i).addClass('is-invalid');
+                  jQuery('#error-message-' + i).addClass('invalid-feedback animated fadeIn').text(error[0]);
+                });
+              }
+            }
+          });
+          return false;
         });
       });
     }

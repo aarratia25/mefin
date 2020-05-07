@@ -26,6 +26,7 @@ export default class App extends Template {
         this.configDarkTheme();
         this.viewData();
         this.sweetAlertDelete();
+        this.createData();
     }
 
     /*
@@ -105,6 +106,7 @@ export default class App extends Template {
                     });
                 }
             });
+            
             return false;
         });
     }
@@ -138,6 +140,43 @@ export default class App extends Template {
                 error: function () { }
             });
 
+            return false;
+        });
+    }
+
+    createData(){
+
+        jQuery('.add-new-data').click(function(){
+            let idSubmit = jQuery(this).attr("data-submit");
+            let endpoint = jQuery(this).attr("data-endpoint");
+            let form = jQuery(idSubmit);
+
+            jQuery(idSubmit).unbind('submit').submit(function(){
+                jQuery.ajax({
+                    url: "/dashboard/" + endpoint,
+                    method: 'POST',
+                    data: form.serialize(),
+                    headers: {
+                        'X-CSRF-TOKEN': window.csrfToken
+                    },
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (err) { 
+                        if (err.status == 422) { 
+                            
+                            let resError = err.responseJSON.errors;
+                            
+                            jQuery.each(resError, function (i, error) {
+                                jQuery('#error-fg-' + i).addClass('is-invalid');
+                                jQuery('#error-message-' + i ).addClass('invalid-feedback animated fadeIn').text(error[0]);
+                            });
+                        }
+                    }
+                });
+                
+                return false;
+            });
         });
     }
 }

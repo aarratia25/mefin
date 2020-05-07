@@ -39,15 +39,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function bootHasRoles()
+    public function scopeList($query)
     {
-        static::deleting(function ($model) {
-            if (! $model->isForceDeleting()) {
-                return;
-            }
-
-            $model->roles()->detach();
-            $model->permissions()->detach();
-        });
+        return $query->where('name', '!=', 'admin')->get();
     }
 }

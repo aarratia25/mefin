@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
+use App\Role;
 use App\User;
 
 
@@ -37,7 +37,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::where('name', '!=', 'admin')->get();
+        $roles = Role::list();
         
         return view('dashboard.roles.list', compact('roles'));
     }
@@ -60,7 +60,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, ['name' => 'required|unique:roles']);
+
+        try {
+            $create = Role::create($request->all());
+            
+            if ( $create ) {
+                $request->session()->flash('message', 'role create!'); 
+
+                return $create;
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

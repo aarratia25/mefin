@@ -7,13 +7,13 @@
         
         @if( isset($route) && Route::is($route)) 
             active
-        @elseif(isset($dropdown))
+        @elseif( isset($dropdown) )
             nav-main-link-submenu
         @endif" 
         
         href="{{ isset($route) ? route($route) : '#' }}"
         
-        @if(isset($dropdown))
+        @if( isset($dropdown) )
             data-toggle="submenu" aria-haspopup="true" aria-expanded="true"
         @endif>
         

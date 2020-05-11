@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
+use Yajra\Datatables\Facades\Datatables;
 use Carbon\Carbon;
 use App\Role;
 use App\User;
@@ -21,13 +22,13 @@ class RoleController extends Controller
     {
         Carbon::setlocale(config('app.locale'));
 
-        // middleware
-        $this->middleware('protected-user-admin');
-        $this->middleware('can:role.index')->only('index');
-        $this->middleware('can:role.create')->only(['create', 'store']);
-        $this->middleware('can:role.edit')->only(['edit', 'update']);
-        $this->middleware('can:role.show')->only('show');
-        $this->middleware('can:role.destroy')->only('destroy');
+        // // middleware
+        // $this->middleware('protected-user-admin');
+        // $this->middleware('can:role.index')->only('index');
+        // $this->middleware('can:role.create')->only(['create', 'store']);
+        // $this->middleware('can:role.edit')->only(['edit', 'update']);
+        // $this->middleware('can:role.show')->only('show');
+        // $this->middleware('can:role.destroy')->only('destroy');
     }
 
     /**
@@ -35,21 +36,31 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $roles = Role::list();
-        
-        return view('dashboard.roles.list', compact('roles'));
+    public function index(Request $request)
+    {   
+        if ($request->ajax()) {
+           return $this->list();
+        }
+
+        return view('dashboard.roles.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function list()
+    {   
+        $roles = Role::list();
+
+        return datatables()
+            ->collection($roles)
+            ->addColumn('actions', 'components.actions')
+            ->rawColumns(['actions'])
+            ->editColumn('created_at', function(Role $role) {
+                return $role->created_at->diffForHumans();
+            })->toJson();
     }
 
     /**
@@ -65,11 +76,8 @@ class RoleController extends Controller
         try {
             $create = Role::create($request->all());
             
-            if ( $create ) {
-                $request->session()->flash('message', 'role create!'); 
-
-                return $create;
-            }
+            return ['data' => $create, 'message' => 'success!'];
+            
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -84,17 +92,6 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         return $role;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

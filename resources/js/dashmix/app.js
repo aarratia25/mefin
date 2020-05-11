@@ -12,8 +12,13 @@ import "./bootstrap";
 import Tools from "./modules/tools";
 import Helpers from "./modules/helpers";
 import Template from "./modules/template";
+
+// Installed 
 import 'sweetalert2/src/sweetalert2.scss'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'datatables.net-bs4';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
 
 // App extends Template
 export default class App extends Template {
@@ -24,9 +29,9 @@ export default class App extends Template {
     constructor() {
         super();
         this.configDarkTheme();
-        this.viewData();
-        this.sweetAlertDelete();
+        this.runDataTable();
         this.createData();
+        this.refresh();
     }
 
     /*
@@ -41,6 +46,61 @@ export default class App extends Template {
      *  inits all vital functionality but you can change it to fit your own needs.
      *
      */
+
+     refresh(){
+        var date = new Date();
+
+        setTimeout(function() {
+            setInterval(Dashmix.myFunction, 60000);
+            Dashmix.myFunction();
+        }, (60 - date.getSeconds()) * 1000);
+     }
+
+     myFunction(){
+        jQuery('#users').DataTable().ajax.reload();
+     }
+
+     runDataTable() {
+        // Override a few default classes
+        jQuery.extend(jQuery.fn.dataTable.ext.classes, {
+            sWrapper: "dataTables_wrapper dt-bootstrap4",
+            sFilterInput:  "form-control",
+            sLengthSelect: "form-control"
+        });
+
+        // Override a few defaults
+        jQuery.extend(true, jQuery.fn.dataTable.defaults, {
+            language: {
+                lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
+                paginate: {
+                    first: '<i class="fa fa-angle-double-left"></i>',
+                    previous: '<i class="fa fa-angle-left"></i>',
+                    next: '<i class="fa fa-angle-right"></i>',
+                    last: '<i class="fa fa-angle-double-right"></i>'
+                }
+            }
+        });
+
+        jQuery('#users').DataTable({
+            order: [[ 0, 'desc' ]],
+            pagingType: "full_numbers",
+            pageLength: 5,
+            lengthMenu: [[5, 10, 20], [5, 10, 20]],
+            autoWidth: false,
+            serverSide: true,
+            ajax: "/dashboard/roles",
+            method:"get",
+            columns: [
+                {data: 'id'},
+                {data: 'name'},
+                {data: 'created_at'},
+                {data: 'actions'},
+            ]
+        });
+     }
     configDarkTheme() {
         let container = jQuery("#page-container");
         let toggle = jQuery("#sidebar-style-toggler");
@@ -111,37 +171,34 @@ export default class App extends Template {
         });
     }
 
-    viewData() {
-        jQuery('.js-modal-edit').click(function () {
-            let id = jQuery(this).attr("data-id");
-            let endpoint = jQuery(this).attr("data-endpoint");
-            let modal = jQuery(this).attr("data-modal");
-            let idSubmit = jQuery(this).attr("data-submit");
+    viewData(id, endpoint, modal, idSubmit) {
+        
+        jQuery(modal).modal('show');
 
-            Helpers.updateData(idSubmit, endpoint, id, modal);
+        // Helpers.updateData(idSubmit, endpoint, id, modal);
 
-            let form = jQuery(idSubmit).find('input, select, textarea, checkbox, radio');
-            let inputs = [];
+        let form = jQuery(idSubmit).find('input, select, textarea, checkbox, radio');
+        let inputs = [];
 
-            form.each(function(i, v){
-                inputs.push(jQuery(v).attr('name'));
-            });
-
-            jQuery.ajax({
-                url: "/dashboard/" + endpoint + "/" + id,
-                method: "GET",
-                success: function (data) {
-                    Helpers.showViewData(inputs, data);
-
-                    jQuery('#title-modal').text(id);
-                    
-                    jQuery(modal).modal('toggle');
-                },
-                error: function () { }
-            });
-
-            return false;
+        form.each(function(i, v){
+            inputs.push(jQuery(v).attr('name'));
         });
+
+        jQuery.ajax({
+            url: "/dashboard/" + endpoint + "/" + id,
+            method: "GET",
+            success: function (data) {
+                Helpers.showViewData(inputs, data);
+
+                jQuery('#title-modal').text(id);
+
+                
+                // jQuery(modal).modal('toggle');
+            },
+            error: function () { }
+        });
+
+        return false;
     }
 
     createData(){
@@ -160,7 +217,8 @@ export default class App extends Template {
                         'X-CSRF-TOKEN': window.csrfToken
                     },
                     success: function (response) {
-                        location.reload();
+                        jQuery(form).trigger("reset");
+                        jQuery('#users').DataTable().ajax.reload();
                     },
                     error: function (err) { 
                         if (err.status == 422) { 

@@ -29,7 +29,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
     // Users
     Route::resource('users', 'Dashboard\UsersController');
-    
+
     // Roles
     Route::resource('roles', 'Dashboard\RoleController');
 

@@ -24,23 +24,33 @@
 
             <x-alerts class="alert-success" :title="session('message')"/>
             
-            <!-- Full Table -->
-            <x-table class="test" :headers="[
-                    ['name' => 'ID'],
-                    ['name' => 'Name'],
-                    ['name' => 'Created at'],
-                    ['class' => 'text-center', 'name' => 'Actions']
-                ]">
-                
-                @each('dashboard.roles.item', $roles, 'role', 'components.no-items')
-            
-            </x-table>
-            <!-- END Full Table -->
+            <!-- Dynamic Table Simple -->
+            <div class="block block-rounded block-bordered">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Dynamic Table <small>With only sorting and pagination</small></h3>
+                </div>
+                <div class="block-content block-content-full">
+                    <table class="table table-bordered table-striped table-vcenter" id="users" >
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 80px;">ID</th>
+                                <th>Name</th>
+                                <th>Creado</th>
+                                <th style="width: 15%;">Aciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END Dynamic Table Simple -->
+
         </div>
     </div>
 </div>
 <!-- END Page Content -->
 @endsection
+
 @section('modal')
     
     {{-- Edit Role --}}
